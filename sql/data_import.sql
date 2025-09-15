@@ -9,7 +9,8 @@ CREATE TABLE cells (
 
 -- Population 
 CREATE TABLE pop (
-    cell_id TEXT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    cell_id TEXT REFERENCES cells(cell_id),
     elderly_60 REAL,
     general_pop REAL,
     children_under5 REAL,
@@ -52,12 +53,12 @@ CREATE TABLE ntl_monthly (
 
 
 -- LOAD DATA FROM CSV FILES
-COPY cells FROM '/Users/dmatekenya/My Drive (dmatekenya@gmail.com)/TEACHING/AIMS-DSCBI/data/tmp-db-data/cells.csv' DELIMITER ',' CSV HEADER;
-COPY pop FROM '/Users/dmatekenya/My Drive (dmatekenya@gmail.com)/TEACHING/AIMS-DSCBI/data/tmp-db-data/population.csv' DELIMITER ',' CSV HEADER;
-COPY ntl_annual FROM '/Users/dmatekenya/My Drive (dmatekenya@gmail.com)/TEACHING/AIMS-DSCBI/data/tmp-db-data/ntl-annual-2012-2024.csv' DELIMITER ',' CSV HEADER;
+COPY cells FROM '/home/ira2351696/Desktop/AIMS-DSCBI/data/tmp-db-data/cells.csv' DELIMITER ',' CSV HEADER;
+COPY pop FROM '/home/ira2351696/Desktop/AIMS-DSCBI/data/tmp-db-data/population.csv' DELIMITER ',' CSV HEADER;
+COPY ntl_annual FROM '/home/ira2351696/Desktop/AIMS-DSCBI/data/tmp-db-data/ntl-annual-2012-2024.csv' DELIMITER ',' CSV HEADER;
 \copy ntl_monthly(cell_id, ntl_min, ntl_max, ntl_mean, ntl_median, ntl_sum,
                   pixel_count, raster_filename, year, month, date)
-FROM '/Users/dmatekenya/My Drive (dmatekenya@gmail.com)/TEACHING/AIMS-DSCBI/data/tmp-db-data/merged-zonal-stats-2012-2024.csv'
+FROM '/home/ira2351696/Desktop/AIMS-DSCBI/data/tmp-db-data/merged-zonal-stats-2012-2024.csv'
 CSV HEADER;
 
 

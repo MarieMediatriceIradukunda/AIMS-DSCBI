@@ -21,7 +21,7 @@ SELECT * FROM ntl_monthly LIMIT 5;
 
 -- 2. Annual summaries
 \echo '--- Annual summaries ---'
-SELECT year, AVG(ntl_mean) AS avg_ntl_mean
+SELECT year, AVG(ntl_mean) AS avg_mean
 FROM ntl_annual
 GROUP BY year
 ORDER BY year;
@@ -140,3 +140,9 @@ CREATE INDEX IF NOT EXISTS idx_pop_cell_id
 -- END OF SCRIPT
 -- ============================================================
 
+select c.province_name, c.district_name,c.sector_name, sum(a.ntl_sum) as ntl_sum
+from cells c
+join ntl_annual a on c.cell_id = a.cell_id
+where a.year = 2023 and a.ntl_sum>50
+group by c.province_name, c.district_name,c.sector_name
+order by ntl_sum desc;
